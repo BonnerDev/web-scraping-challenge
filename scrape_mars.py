@@ -33,13 +33,13 @@ def scrape():
     soup2=bs(mars_html,'html.parser')
 
     featured_image_url  = soup2.find_all('img')[3]["src"]
-    print(featured_image_url)
+    
     #mars facts
     url_facts = "https://space-facts.com/mars/"
     facts = pd.read_html(url_facts)
     new_table=facts[0]
     final_table=new_table.rename(columns={0: "Description", 1:"Mars"})
-    html_table=final_table.to_html("table.html")
+    html_table=final_table.to_html
 
     #mars hemisphere
     url_hemi = "https://astrogeology.usgs.gov/search/map/Mars/Viking/cerberus_enhanced"
