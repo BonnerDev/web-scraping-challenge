@@ -3,7 +3,7 @@ from splinter import Browser
 from bs4 import BeautifulSoup as bs
 import time
 from webdriver_manager.chrome import ChromeDriverManager
-
+import pandas as pd
 
 def init_browser():
     # @NOTE: Replace the path with your actual path to the chromedriver
@@ -11,7 +11,7 @@ def init_browser():
     return Browser("chrome", **executable_path, headless=False)
 
 
-def scrape_info():
+def scrape():
     browser = init_browser()
 
     #Mars News
@@ -33,7 +33,7 @@ def scrape_info():
     soup2=bs(mars_html,'html.parser')
 
     featured_image_url  = soup2.find_all('img')[3]["src"]
-
+    print(featured_image_url)
     #mars facts
     url_facts = "https://space-facts.com/mars/"
     facts = pd.read_html(url_facts)
@@ -50,7 +50,7 @@ def scrape_info():
 
     titles = []
     
-    for title in title_hemi:
+    for title in titles:
       titles.append(title.h3.text)
     
     hemisphere_image_urls = []
@@ -60,12 +60,12 @@ def scrape_info():
         browser.visit(img_url)
         time.sleep(5)
         browser.click_link_by_partial_text(title)
-        html=browser.html
-        soup3=bs(html,"html.parser")
+        html4=browser.html
+        soup3=bs(html4,"html.parser")
         img_url_hemi=soup3.find_all("li")[0].a["href"]
-        img_dict = {"title":title, "img_url":img_url}
-        astro_list.append(img_dict)
-    browser.quit()
+        img_dict = {"title":title, "img_url":img_url_hemi}
+        hemisphere_image_urls.append(img_dict)
+    
 
 
   # Store data in a dictionary

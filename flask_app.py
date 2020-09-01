@@ -25,10 +25,10 @@ def home():
 def scrape():
 
     # Run the scrape function
-    nasa_data = scrape_mars.scrape_info()
+    mars_make_coll = scrape_mars.scrape()
 
     # Update the Mongo database using update and upsert=True
-    mongo.db.collection.update({}, nasa_data, upsert=True)
+    mongo.db.collection.update({}, mars_make_coll, upsert=True)
 
     # Redirect back to home page
     return redirect("/")
